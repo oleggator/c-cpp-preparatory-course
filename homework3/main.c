@@ -49,6 +49,7 @@ int handleFile(FILE *file) {
             if (feof(file)) {
                 break;
             } else {
+                freeBinarySearchTree(binarySearchTree);
                 return NULL;
             }
         }
@@ -65,6 +66,7 @@ int handleFile(FILE *file) {
                     break;
                 } else {
                     printf("Element insertion error\n");
+                    freeBinarySearchTree(binarySearchTree);
                     return NULL;
                 }
 
@@ -74,25 +76,27 @@ int handleFile(FILE *file) {
                     break;
                 } else {
                     printf("Element removing error\n");
+                    freeBinarySearchTree(binarySearchTree);
                     return NULL;
                 }
 
             case '?':
                 if (printWord(binarySearchTree, (void *)word)){
-                    //printf("Element check\n");
+
                     break;
                 } else {
                     printf("Element checking error\n");
+                    freeBinarySearchTree(binarySearchTree);
                     return NULL;
                 }
 
             default:
                 printf("Wrong operator\n");
+                freeBinarySearchTree(binarySearchTree);
                 return NULL;
         }
     }
 
-    freeBinarySearchTree(binarySearchTree);
     return 1;
 }
 
