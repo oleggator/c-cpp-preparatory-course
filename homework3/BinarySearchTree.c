@@ -18,7 +18,7 @@ struct Node {
     Node *right;
 };
 
-Node *findParentElement(Node *node, void *key, CompareFunction compareFunction, size_t keySize);
+Node *findParentElement(Node *node, void *key, size_t keySize);
 Node *findNode(Node *parentNode, void *key, size_t keySize);
 void freeNodes(Node *node);
 
@@ -42,7 +42,7 @@ void freeBinarySearchTree(BinarySearchTree *binarySearchTree) {
     freeNodes(binarySearchTree->root);
 }
 
-int addElement(BinarySearchTree *binarySearchTree, void *key, void *value, CompareFunction compareFunction) {
+int addElement(BinarySearchTree *binarySearchTree, void *key, void *value) {
     if (binarySearchTree->elementsCount == 0) {
         Node *node;
         if (!( node = malloc(sizeof(Node)) )) {
@@ -71,7 +71,7 @@ int addElement(BinarySearchTree *binarySearchTree, void *key, void *value, Compa
     }
 
     if (binarySearchTree->elementsCount > 0) {
-        Node *parentNode = findParentElement(binarySearchTree->root, key, compareFunction, binarySearchTree->keySize);
+        Node *parentNode = findParentElement(binarySearchTree->root, key, binarySearchTree->keySize);
 
         if (memcmp(key, parentNode->key, binarySearchTree->keySize) == 0) {
             printf("Element is exist\n");
@@ -161,7 +161,7 @@ size_t getValueSize(BinarySearchTree *binarySearchTree) {
 
 
 // Возращает элемент, дочерним элементом которого может стать элемент с заданным ключом
-Node *findParentElement(Node *node, void *key, CompareFunction compareFunction, size_t keySize) {
+Node *findParentElement(Node *node, void *key, size_t keySize) {
 
     if ( memcmp(key, node->key, keySize) == 0) {
         return node;
@@ -172,7 +172,7 @@ Node *findParentElement(Node *node, void *key, CompareFunction compareFunction, 
             return node;
         }
         
-        return findParentElement(node->right, key, compareFunction, keySize);
+        return findParentElement(node->right, key, keySize);
     }
 
     if ( memcmp(key, node->key, keySize) < 0) {
@@ -180,7 +180,7 @@ Node *findParentElement(Node *node, void *key, CompareFunction compareFunction, 
             return node;
         }
 
-        return findParentElement(node->left, key, compareFunction, keySize);
+        return findParentElement(node->left, key, keySize);
     }
 
     return NULL;

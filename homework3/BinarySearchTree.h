@@ -11,12 +11,10 @@ typedef struct Node Node;
 struct BinarySearchTree;
 typedef struct BinarySearchTree BinarySearchTree;
 
-typedef int (*CompareFunction)(void *, void *);
-
 BinarySearchTree *createBinarySearchTree(size_t keySize, size_t valueSize);
 void freeBinarySearchTree(BinarySearchTree *binarySearchTree);
 
-int addElement(BinarySearchTree *binarySearchTree, void *key, void *value, CompareFunction compareFunction);
+int addElement(BinarySearchTree *binarySearchTree, void *key, void *value);
 int setElement(BinarySearchTree *binarySearchTree, void *key, void *value);
 int removeElement(BinarySearchTree *binarySearchTree, void *key);
 void *getElementValue(BinarySearchTree *binarySearchTree, void *key);

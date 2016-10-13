@@ -5,7 +5,6 @@
 
 #define MAX_STRING_LENGTH 128
 
-int stringCompareFunction(void *string1, void *string2);
 int handleFile(FILE *file);
 int printWord(BinarySearchTree * binarySearchTree, char *string);
 
@@ -31,13 +30,6 @@ int main(int argc, char* argv[]) {
     return EXIT_SUCCESS;
 }
 
-int stringCompareFunction(void *pointer1, void *pointer2) {
-    char *string1 = (char *)pointer1;
-    char *string2 = (char *)pointer2;
-
-    return strcmp(string1, string2);
-}
-
 int handleFile(FILE *file) {
     BinarySearchTree *binarySearchTree = createBinarySearchTree( sizeof(char[MAX_STRING_LENGTH]), sizeof(char[MAX_STRING_LENGTH]) );
 
@@ -54,14 +46,13 @@ int handleFile(FILE *file) {
             }
         }
 
-        CompareFunction compareFunction = &stringCompareFunction;
         char emptyString[] = "\0";
 
         //printf("Operator: %c, word: %s\n", operator, word);
 
         switch (operator) {
             case '+': 
-                if ( addElement(binarySearchTree, (void *)word, (void *)emptyString, compareFunction) ) {
+                if ( addElement(binarySearchTree, (void *)word, (void *)emptyString) ) {
                     //printf("Element add\n");
                     break;
                 } else {
