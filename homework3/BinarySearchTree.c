@@ -210,8 +210,6 @@ void freeNodes(Node *node) {
     Node *left = node->left;
     Node *right = node->right;
 
-    free(node->left);
-    free(node->right);
     free(node->key);
     free(node->value);
 
@@ -224,6 +222,9 @@ void freeNodes(Node *node) {
             freeNodes(right);
         }
     }
+
+    free(node->left);
+    free(node->right);
 
 }
 

@@ -48,8 +48,6 @@ int handleFile(FILE *file) {
 
         char emptyString[] = "\0";
 
-        //printf("Operator: %c, word: %s\n", operator, word);
-
         switch (operator) {
             case '+': 
                 if ( addElement(binarySearchTree, (void *)word, (void *)emptyString) ) {
