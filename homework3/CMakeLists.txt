@@ -15,6 +15,7 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
 set(BinarySearchTree_SOURCE_FILES BinarySearchTree.c BinarySearchTree.h)
 add_library(BinarySearchTree ${BinarySearchTree_SOURCE_FILES})
+add_library(BinarySearchTreeShared SHARED ${BinarySearchTree_SOURCE_FILES})
 
 set(SOURCE_FILES main.c)
 add_executable(homework3 ${SOURCE_FILES})

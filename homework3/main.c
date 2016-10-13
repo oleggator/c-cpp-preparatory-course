@@ -1,12 +1,11 @@
 #include <stdio.h>
-#include <string.h>
 
 #include "BinarySearchTree.h"
 
 #define MAX_STRING_LENGTH 128
 
 int handleFile(FILE *file);
-int printWord(BinarySearchTree * binarySearchTree, char *string);
+void printWord(BinarySearchTree * binarySearchTree, char *string);
 
 int main(int argc, char* argv[]) {
     if (argc != 2) {
@@ -46,55 +45,45 @@ int handleFile(FILE *file) {
             }
         }
 
-        char emptyString[] = "\0";
+        char emptyString[] = "";
 
         switch (operator) {
             case '+': 
                 if ( addElement(binarySearchTree, (void *)word, (void *)emptyString) ) {
-                    //printf("Element add\n");
                     break;
                 } else {
                     printf("Element insertion error\n");
-                    freeBinarySearchTree(binarySearchTree);
+
                     return NULL;
                 }
 
             case '-':
                 if ( removeElement(binarySearchTree, (void *)word) ) {
-                    //printf("Element remove\n");
                     break;
                 } else {
                     printf("Element removing error\n");
-                    freeBinarySearchTree(binarySearchTree);
                     return NULL;
                 }
 
             case '?':
-                if (printWord(binarySearchTree, (void *)word)){
-
-                    break;
-                } else {
-                    printf("Element checking error\n");
-                    freeBinarySearchTree(binarySearchTree);
-                    return NULL;
-                }
-
+                printWord(binarySearchTree, (void *)word);
+                break;
+                
             default:
                 printf("Wrong operator\n");
-                freeBinarySearchTree(binarySearchTree);
                 return NULL;
         }
     }
 
+    freeBinarySearchTree(binarySearchTree);
+
     return 1;
 }
 
-int printWord(BinarySearchTree *binarySearchTree, char *string) {
+void printWord(BinarySearchTree *binarySearchTree, char *string) {
     if ( isExist(binarySearchTree, (void *)string) ) {
         printf("YES %s\n", string);
-        return 1;
     } else {
         printf("NO %s\n", string);
-        return 1;
     }
 }

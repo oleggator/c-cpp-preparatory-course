@@ -40,6 +40,7 @@ BinarySearchTree *createBinarySearchTree(size_t keySize, size_t valueSize) {
 
 void freeBinarySearchTree(BinarySearchTree *binarySearchTree) {
     freeNodes(binarySearchTree->root);
+
     free(binarySearchTree);
 }
 
@@ -80,6 +81,10 @@ int addElement(BinarySearchTree *binarySearchTree, void *key, void *value) {
         }
 
         Node *node = malloc(sizeof(Node));
+        if (!node) {
+            printf("Memory allocation error");
+            return NULL;
+        }
         if ( memcmp(key, parentNode->key, binarySearchTree->keySize) > 0) {
 
             if (!( parentNode->right = malloc(sizeof(Node)) )){
@@ -132,24 +137,67 @@ int removeElement(BinarySearchTree *binarySearchTree, void *key) {
     Node *right = node->right;
 
     if (!left && !right) {
-        //parentNode->
-        if (node->parent->left == node){
-            node->parent->left = NULL;
-            freeNodes(node);
-            return 1;
+        if (node->parent) {
+            if (node->parent->left == node) {
+                node->parent->left = NULL;
+                freeNodes(node);
+                return 1;
+            }
+
+            if (node->parent->right == node) {
+                node->parent->right = NULL;
+                freeNodes(node);
+                return 1;
+            }
+        } else {
+            binarySearchTree->root = NULL;
+            free(node->key);
+            free(node->value);
+            free(node);
         }
 
-        if (node->parent->left == node){
-            node->parent->left = NULL;
-            freeNodes(node);
-            return 1;
-        }
+        
 
         printf("Element removing error\n");
         return 0;
     }
 
-    return 0;
+    if (left && !right) {
+        if (node->parent) {
+            if (node->parent->left == node) {
+                node->parent->left = left;
+            }
+
+            left->parent = node->parent;
+        } else {
+            binarySearchTree->root = left;
+            left->parent = NULL;
+        }
+
+        free(node->key);
+        free(node->value);
+        free(node);
+    }
+
+    if (!left && right) {
+        if (node->parent) {
+            if (node->parent->right == node) {
+                node->parent->right = right;
+            }
+
+            right->parent = node->parent;
+        } else {
+            binarySearchTree->root = right;
+            right->parent = NULL;
+        }
+
+
+        free(node->key);
+        free(node->value);
+        free(node);
+    }
+
+    return 1;
 }
 
 void *getElementValue(BinarySearchTree *binarySearchTree, void *key) {
@@ -215,18 +263,16 @@ void freeNodes(Node *node) {
     free(node->key);
     free(node->value);
 
-    if (node->left && node->right) {
-        if (node->left) {
-            freeNodes(node->left);
-        }
-
-        if (node->right) {
-            freeNodes(node->right);
-        }
+    if (node->left) {
+        freeNodes(node->left);
     }
 
-    free(node->left);
-    free(node->right);
+    if (node->right) {
+        freeNodes(node->right);
+    }
+
+    free(node);
+
 
 }
 
