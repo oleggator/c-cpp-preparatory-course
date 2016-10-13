@@ -24,7 +24,7 @@ void freeNodes(Node *node);
 
 BinarySearchTree *createBinarySearchTree(size_t keySize, size_t valueSize) {
     
-    BinarySearchTree *binarySearchTree;
+    BinarySearchTree *binarySearchTree = NULL;
     if( !(binarySearchTree = malloc( sizeof(BinarySearchTree) )) ) {
         printf("Memory allocaton error\n");
         return NULL;
@@ -40,11 +40,12 @@ BinarySearchTree *createBinarySearchTree(size_t keySize, size_t valueSize) {
 
 void freeBinarySearchTree(BinarySearchTree *binarySearchTree) {
     freeNodes(binarySearchTree->root);
+    free(binarySearchTree);
 }
 
 int addElement(BinarySearchTree *binarySearchTree, void *key, void *value) {
     if (binarySearchTree->elementsCount == 0) {
-        Node *node;
+        Node *node = NULL;
         if (!( node = malloc(sizeof(Node)) )) {
             printf("Memory allocation error\n");
             return NULL;
@@ -117,6 +118,8 @@ int addElement(BinarySearchTree *binarySearchTree, void *key, void *value) {
         binarySearchTree->elementsCount++;
         return 1;
     }
+
+    return 0;
 }
 
 int removeElement(BinarySearchTree *binarySearchTree, void *key) {
@@ -145,6 +148,8 @@ int removeElement(BinarySearchTree *binarySearchTree, void *key) {
         printf("Element removing error\n");
         return 0;
     }
+
+    return 0;
 }
 
 void *getElementValue(BinarySearchTree *binarySearchTree, void *key) {
@@ -207,19 +212,16 @@ Node *findNode(Node *parentNode, void *key, size_t keySize) {
 }
 
 void freeNodes(Node *node) {
-    Node *left = node->left;
-    Node *right = node->right;
-
     free(node->key);
     free(node->value);
 
-    if (left && right) {
-        if (left) {
-            freeNodes(left);
+    if (node->left && node->right) {
+        if (node->left) {
+            freeNodes(node->left);
         }
 
-        if (right) {
-            freeNodes(right);
+        if (node->right) {
+            freeNodes(node->right);
         }
     }
 
