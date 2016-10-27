@@ -103,13 +103,21 @@ void printCarsByManufacturer(Auto *begin, Auto *end) {
 
 void printCarsByMileage(Auto *begin, Auto *end) {
 
-    unsigned int count;
-    std::cout << "Cars count: ";
-    std::cin >> count;
-    if (count > end - begin) {
-        std::cout << "Incorrect cars count." << std::endl;
-        return 0;
+    unsigned int count = 0;
+    while (1) {
+        std::cout << "Cars count: ";
+        std::cin >> count;
+        //std::cout << "---" << count << "---\n";
+
+        if (count && (count <= end - begin) ) {
+            break;
+        } else {
+            std::cout << "Incorrect cars count." << std::endl;
+            std::cin.clear();
+        }
     }
+    
+    
 
     std::sort(begin, end, [](const Auto &car1, const Auto &car2) -> bool {
         return (car1.getMileage() > car2.getMileage());
