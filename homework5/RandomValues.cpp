@@ -57,11 +57,9 @@ int RandomValues::readValuesFromFile(std::string path, std::vector<std::string> 
     }
 
     std::string buffer;
-    //file >> buffer;
     std::getline(file, buffer);
     while (!file.eof()) {
         array.push_back(buffer);
-        //file >> buffer;
         std::getline(file, buffer);
     }
 
