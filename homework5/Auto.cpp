@@ -117,5 +117,11 @@ Auto& Auto::operator=(const Auto& car) {
 std::ostream &operator<<(std::ostream &stream, const Auto &car) {
     stream << car.getOwner() << "\n\t" << car.getRegistrationPlate()
                   << ' ' << car.getManufacturer() << ' ' << car.getMileage();
+                  
     return stream;
+}
+
+void Auto::show(std::ostream &stream) {
+    stream << this->getOwner() << "\n\t" << this->getRegistrationPlate()
+           << ' ' << this->getManufacturer() << ' ' << this->getMileage();
 }

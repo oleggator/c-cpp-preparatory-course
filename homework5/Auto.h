@@ -26,6 +26,7 @@ public:
 
     Auto& operator=(const Auto& car);
     friend std::ostream &operator<<(std::ostream &stream, const Auto &car);
+    void show(std::ostream &stream);
 
 private:
     char* owner;
